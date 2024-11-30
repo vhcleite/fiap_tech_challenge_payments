@@ -62,14 +62,10 @@ public class PagamentoUseCase {
                 .map(pagamentoGateway::consultarByExternalId)
                 .orElseThrow(() -> new InvalidPagamentoException("pagamento para external id nao encontrado"));
 
-        if (status != null) {
-            OffsetDateTime now = OffsetDateTime.now();
-            pagamento.setStatus(status);
-            pagamento.setPagamentoConfirmadoAt(now);
-            pagamento.setUpdatedAt(now);
-            pagamentoGateway.atualizarPagamento(pagamento);
-        }
-
-        return pagamento;
+        OffsetDateTime now = OffsetDateTime.now();
+        pagamento.setStatus(status);
+        pagamento.setPagamentoConfirmadoAt(now);
+        pagamento.setUpdatedAt(now);
+        return pagamentoGateway.atualizarPagamento(pagamento);
     }
 }
