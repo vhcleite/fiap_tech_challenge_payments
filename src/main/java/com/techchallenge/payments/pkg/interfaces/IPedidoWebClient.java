@@ -6,5 +6,5 @@ import com.techchallenge.payments.pkg.dto.PedidoDto;
 public interface IPedidoWebClient {
     PedidoDto getPedido(String id);
 
-    PedidoDto updateStatus(PedidoStatus pedidoStatus);
+    PedidoDto updateStatus(String id, PedidoStatus pedidoStatus);
 }

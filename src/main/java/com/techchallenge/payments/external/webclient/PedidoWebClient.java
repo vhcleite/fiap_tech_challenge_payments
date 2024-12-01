@@ -12,11 +12,11 @@ public class PedidoWebClient implements IPedidoWebClient {
     //TODO implementar comunicacao com api
     @Override
     public PedidoDto getPedido(String id) {
-        return new PedidoDto("123", "INICIAL", BigDecimal.valueOf(57));
+        return new PedidoDto(id, "INICIAL", BigDecimal.valueOf(57));
     }
 
     @Override
-    public PedidoDto updateStatus(PedidoStatus pedidoStatus) {
-        return new PedidoDto("123", pedidoStatus.name(), BigDecimal.valueOf(57));
+    public PedidoDto updateStatus(String pedidoId, PedidoStatus pedidoStatus) {
+        return new PedidoDto(pedidoId, pedidoStatus.name(), BigDecimal.valueOf(57));
     }
 }

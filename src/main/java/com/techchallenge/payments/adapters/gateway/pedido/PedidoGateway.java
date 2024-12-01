@@ -21,9 +21,8 @@ public class PedidoGateway {
                 .orElse(null);
     }
 
-    public PedidoEntity atualizarStatus(PedidoStatus pedidoStatus) {
-        return Optional.of(pedidoStatus)
-                .map(webClient::updateStatus)
+    public PedidoEntity atualizarStatus(String pedidoId, PedidoStatus pedidoStatus) {
+        return Optional.of(webClient.updateStatus(pedidoId, pedidoStatus))
                 .map(PedidoMapper::toEntity)
                 .orElse(null);
     }
