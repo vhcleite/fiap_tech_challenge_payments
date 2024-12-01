@@ -14,7 +14,9 @@ import com.techchallenge.payments.core.usecases.PedidoUseCase;
 import com.techchallenge.payments.pkg.interfaces.IPagamentoDataSource;
 import com.techchallenge.payments.pkg.interfaces.IPaymentProcessorWebClient;
 import com.techchallenge.payments.pkg.interfaces.IPedidoWebClient;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PagamentoController {
     private final PedidoUseCase pedidoUseCase;
     private final PagamentoUseCase pagamentoUseCase;
@@ -36,7 +38,7 @@ public class PagamentoController {
     }
 
     public PagamentoEntity criarPagamento(CriarPagamentoDto dto) {
-        PedidoEntity pedido = pedidoUseCase.buscarPorId(dto.getPedidoId());
+        PedidoEntity pedido = pedidoUseCase.buscarPorId(dto.pedidoId());
         ExternalPagamentoEntity externalPagamento = this.pagamentoProcessorUseCase.criar(pedido.getTotalPrice());
 
         return this.pagamentoUseCase.criar(pedido.getId(), pedido.getTotalPrice(), externalPagamento.getExternalId());

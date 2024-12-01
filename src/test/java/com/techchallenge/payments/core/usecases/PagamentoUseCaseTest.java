@@ -11,8 +11,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 
+import static com.techchallenge.payments.helpers.PagamentoHelper.generatePagamento;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -128,22 +128,5 @@ class PagamentoUseCaseTest {
 
         verify(pagamentoGateway, times(1)).consultarByExternalId(savedPagamentoEntity.getExternalId());
         verify(pagamentoGateway, never()).atualizarPagamento(any());
-    }
-
-    private PagamentoEntity generatePagamento(StatusPagamento status) {
-        var pedidoId = "id";
-        var totalPrice = BigDecimal.valueOf(100L);
-        var externalId = "externalId";
-
-        return new PagamentoEntity(
-                "id",
-                externalId,
-                pedidoId,
-                totalPrice,
-                status,
-                null,
-                OffsetDateTime.now(),
-                OffsetDateTime.now()
-        );
     }
 }

@@ -8,6 +8,8 @@ import com.techchallenge.payments.pkg.dto.PagamentoDto;
 import com.techchallenge.payments.pkg.interfaces.IPagamentoDataSource;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -17,11 +19,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class PagamentoMongoDbDataSource implements IPagamentoDataSource {
     private final MongoClient client;
     private final MongoCollection<Document> collection;
 
-    public PagamentoMongoDbDataSource(String connectionString, String database) {
+    public PagamentoMongoDbDataSource(
+            @Value("${mongo.connection}") String connectionString,
+            @Value("${mongo.database}") String database
+    ) {
         this.client = MongoClients.create(connectionString);
         MongoDatabase mongoDatabase = client.getDatabase(database);
         this.collection = mongoDatabase.getCollection("pagamentos");
