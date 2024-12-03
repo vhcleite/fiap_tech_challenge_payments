@@ -39,9 +39,19 @@ public class PagamentoMongoDbDataSource implements IPagamentoDataSource {
         Document document = convertPagamentoToDocument(id, pagamento);
         collection.insertOne(document);
 
-        pagamento.setId(id);
-        return pagamento;
+        // Create a new instance of PagamentoDto with the generated id
+        return new PagamentoDto(
+                id,
+                pagamento.externalId(),
+                pagamento.pedidoId(),
+                pagamento.valor(),
+                pagamento.status(),
+                pagamento.pagamentoConfirmadoAt(),
+                pagamento.createdAt(),
+                pagamento.updatedAt()
+        );
     }
+
 
     @Override
     public PagamentoDto firstPagamentoByPedidoIdSortByUpdatedAtDesc(String pedidoId) {
@@ -67,9 +77,9 @@ public class PagamentoMongoDbDataSource implements IPagamentoDataSource {
 
     @Override
     public PagamentoDto updatePagamento(PagamentoDto pagamento) {
-        var id = pagamento.getId();
+        var id = pagamento.id();
         Document updatedDoc = convertPagamentoToDocument(id, pagamento);
-        Bson filter = Filters.eq("id", pagamento.getId());
+        Bson filter = Filters.eq("id", pagamento.id());
         collection.replaceOne(filter, updatedDoc);
         return pagamento;
     }
@@ -77,16 +87,16 @@ public class PagamentoMongoDbDataSource implements IPagamentoDataSource {
     private Document convertPagamentoToDocument(String id, PagamentoDto pagamento) {
         return new Document()
                 .append("id", id)
-                .append("external_id", pagamento.getExternalId())
-                .append("pedido_id", pagamento.getPedidoId())
-                .append("valor", pagamento.getValor().toString())
-                .append("status", pagamento.getStatus())
-                .append("pagamento_confirmado_at", Optional.ofNullable(pagamento.getPagamentoConfirmadoAt())
+                .append("external_id", pagamento.externalId())
+                .append("pedido_id", pagamento.pedidoId())
+                .append("valor", pagamento.valor().toString())
+                .append("status", pagamento.status())
+                .append("pagamento_confirmado_at", Optional.ofNullable(pagamento.pagamentoConfirmadoAt())
                         .map(String::valueOf)
                         .orElse(null)
                 )
-                .append("created_at", pagamento.getCreatedAt().toString())
-                .append("updated_at", pagamento.getUpdatedAt().toString());
+                .append("created_at", pagamento.createdAt().toString())
+                .append("updated_at", pagamento.updatedAt().toString());
     }
 
     private PagamentoDto convertDocumentToPagamento(Document doc) {

@@ -27,9 +27,9 @@ public class PagamentoController {
 
     public PagamentoEntity criarPagamento(CriarPagamentoDto dto) {
         PedidoEntity pedido = pedidoUseCase.buscarPorId(dto.pedidoId());
-        ExternalPagamentoEntity externalPagamento = this.pagamentoProcessorUseCase.criar(pedido.getTotalPrice());
+        ExternalPagamentoEntity externalPagamento = this.pagamentoProcessorUseCase.criar(pedido.totalPrice());
 
-        return this.pagamentoUseCase.criar(pedido.getId(), pedido.getTotalPrice(), externalPagamento.getExternalId());
+        return this.pagamentoUseCase.criar(pedido.id(), pedido.totalPrice(), externalPagamento.externalId());
     }
 
     public PagamentoEntity pagamentoStatusCallback(String externalId) {

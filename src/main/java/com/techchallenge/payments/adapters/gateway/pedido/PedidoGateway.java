@@ -17,14 +17,14 @@ public class PedidoGateway {
     }
 
     public PedidoEntity getById(String id) {
-        return Optional.of(id)
+        return Optional.ofNullable(id)
                 .map(webClient::getPedido)
                 .map(PedidoMapper::toEntity)
                 .orElse(null);
     }
 
     public PedidoEntity atualizarStatus(String pedidoId, PedidoStatus pedidoStatus) {
-        return Optional.of(webClient.updateStatus(pedidoId, pedidoStatus))
+        return Optional.ofNullable(webClient.updateStatus(pedidoId, pedidoStatus))
                 .map(PedidoMapper::toEntity)
                 .orElse(null);
     }

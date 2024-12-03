@@ -19,14 +19,14 @@ public class PagamentoMapper {
 
     public static PagamentoEntity toEntity(PagamentoDto pagamento) {
         return new PagamentoEntity(
-                pagamento.getId(),
-                pagamento.getExternalId(),
-                pagamento.getPedidoId(),
-                pagamento.getValor(),
-                pagamento.getStatus(),
-                pagamento.getPagamentoConfirmadoAt(),
-                pagamento.getCreatedAt(),
-                pagamento.getUpdatedAt()
+                pagamento.id(),
+                pagamento.externalId(),
+                pagamento.pedidoId(),
+                pagamento.valor(),
+                pagamento.status(),
+                pagamento.pagamentoConfirmadoAt(),
+                pagamento.createdAt(),
+                pagamento.updatedAt()
         );
     }
 }
