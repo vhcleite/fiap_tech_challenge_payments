@@ -7,14 +7,17 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class PagamentoEntity {
-    private final String id;
+    private String id;
     private String externalId;
-    private final String pedidoId;
-    private final BigDecimal valor;
+    private String pedidoId;
+    private BigDecimal valor;
     private StatusPagamento status;
     private OffsetDateTime pagamentoConfirmadoAt;
-    private final OffsetDateTime createdAt;
+    private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
+
+    public PagamentoEntity() {
+    }
 
     public PagamentoEntity(
             String id,

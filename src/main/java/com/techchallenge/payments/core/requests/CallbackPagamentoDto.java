@@ -1,4 +1,6 @@
 package com.techchallenge.payments.core.requests;
 
-public record CallbackPagamentoDto(String externalId) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record CallbackPagamentoDto(@JsonProperty("external_id") String externalId) {
 }

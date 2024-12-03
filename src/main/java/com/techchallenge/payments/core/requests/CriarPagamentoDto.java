@@ -1,4 +1,6 @@
 package com.techchallenge.payments.core.requests;
 
-public record CriarPagamentoDto(String pedidoId) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record CriarPagamentoDto(@JsonProperty("pedido_id") String pedidoId) {
 }
