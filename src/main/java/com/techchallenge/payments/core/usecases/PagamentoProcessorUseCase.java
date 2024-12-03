@@ -3,9 +3,11 @@ package com.techchallenge.payments.core.usecases;
 import com.techchallenge.payments.adapters.gateway.pagamento.PaymentProcessorGateway;
 import com.techchallenge.payments.core.entities.pagamento.ExternalPagamentoEntity;
 import com.techchallenge.payments.core.entities.pagamento.StatusPagamento;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public class PagamentoProcessorUseCase {
     private final PaymentProcessorGateway paymentProcessorGateway;
 

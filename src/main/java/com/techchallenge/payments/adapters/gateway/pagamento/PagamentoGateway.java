@@ -5,9 +5,11 @@ import com.techchallenge.payments.core.entities.pagamento.PagamentoEntity;
 import com.techchallenge.payments.core.exceptions.InvalidPagamentoException;
 import com.techchallenge.payments.pkg.dto.PagamentoDto;
 import com.techchallenge.payments.pkg.interfaces.IPagamentoDataSource;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class PagamentoGateway {
 
     private final IPagamentoDataSource dataSource;

@@ -4,7 +4,9 @@ import com.techchallenge.payments.adapters.gateway.pedido.PedidoGateway;
 import com.techchallenge.payments.core.entities.pagamento.StatusPagamento;
 import com.techchallenge.payments.core.entities.pedido.PedidoEntity;
 import com.techchallenge.payments.core.entities.pedido.PedidoStatus;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PedidoUseCase {
     private final PedidoGateway pedidoGateway;
 

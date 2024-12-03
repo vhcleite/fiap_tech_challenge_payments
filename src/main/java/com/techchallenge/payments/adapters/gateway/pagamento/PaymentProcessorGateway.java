@@ -3,10 +3,12 @@ package com.techchallenge.payments.adapters.gateway.pagamento;
 import com.techchallenge.payments.core.entities.pagamento.ExternalPagamentoEntity;
 import com.techchallenge.payments.core.entities.pagamento.StatusPagamento;
 import com.techchallenge.payments.pkg.interfaces.IPaymentProcessorWebClient;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
+@Component
 public class PaymentProcessorGateway {
 
     private final IPaymentProcessorWebClient datasource;

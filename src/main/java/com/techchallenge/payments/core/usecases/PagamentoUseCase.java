@@ -4,11 +4,13 @@ import com.techchallenge.payments.adapters.gateway.pagamento.PagamentoGateway;
 import com.techchallenge.payments.core.entities.pagamento.PagamentoEntity;
 import com.techchallenge.payments.core.entities.pagamento.StatusPagamento;
 import com.techchallenge.payments.core.exceptions.InvalidPagamentoException;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
+@Service
 public class PagamentoUseCase {
     private final PagamentoGateway pagamentoGateway;
 
