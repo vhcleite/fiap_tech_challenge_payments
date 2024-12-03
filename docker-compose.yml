@@ -13,6 +13,11 @@ services:
     ports:
       - 27070:27017
     restart: always
+  payment-app:
+    build: .
+    container_name: "docker-payment-app"
+    ports:
+      - 8080:8080
 #  app:
 #    image: pedrogimenezsilva/fiap_tech_challenge:v1.0.0
 #    container_name: "docker-app"
