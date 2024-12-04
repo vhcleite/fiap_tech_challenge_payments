@@ -39,4 +39,8 @@ public class PagamentoController {
         pedidoUseCase.atualizarStatusCallbackPagamento(pagamento.getPedidoId(), pagamento.getStatus());
         return pagamento;
     }
+
+    public PagamentoEntity consultarByPedidoId(String pedidoId) {
+        return pagamentoUseCase.consultarByPedidoId(pedidoId);
+    }
 }

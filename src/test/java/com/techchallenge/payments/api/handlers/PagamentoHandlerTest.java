@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,6 +59,20 @@ class PagamentoHandlerTest {
                 .andExpect(status().isCreated());
 
         verify(controller, times(1)).criarPagamento(dto);
+    }
+
+    @Test
+    public void shouldConsultarByPedidoId() throws Exception {
+        //Arrange
+        var pedidoId = "pedido_id";
+        var pagamento = PagamentoHelper.generatePagamento(StatusPagamento.PENDENTE);
+        Mockito.when(controller.consultarByPedidoId(pedidoId)).thenReturn(pagamento);
+
+        //Act & Assert
+        mockMvc.perform(get("/api/pagamentos/pedidos/" + pedidoId))
+                .andExpect(status().isOk());
+
+        verify(controller, times(1)).consultarByPedidoId(pedidoId);
     }
 
     @Test

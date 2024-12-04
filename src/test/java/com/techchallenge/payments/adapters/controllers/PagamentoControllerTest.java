@@ -86,4 +86,22 @@ class PagamentoControllerTest {
         verify(pagamentoUseCase).callbackPagamento(externalId, statusPagamento);
         verify(pedidoUseCase).atualizarStatusCallbackPagamento(pedidoId, StatusPagamento.APROVADO);
     }
+
+    @Test
+    void testConsultarPagamento_Success() {
+        // Arrange
+        String pedidoId = "pedido123";
+
+        PagamentoEntity expectedPagamento = PagamentoHelper.generatePagamento(StatusPagamento.PENDENTE);
+
+        when(pagamentoUseCase.consultarByPedidoId(pedidoId)).thenReturn(expectedPagamento);
+
+        // Act
+        PagamentoEntity result = pagamentoController.consultarByPedidoId(pedidoId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(expectedPagamento, result);
+        verify(pagamentoUseCase).consultarByPedidoId(pedidoId);
+    }
 }

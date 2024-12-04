@@ -7,10 +7,7 @@ import com.techchallenge.payments.core.requests.CriarPagamentoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/pagamentos")
@@ -30,6 +27,16 @@ public class PagamentoHandler {
     public ResponseEntity<PagamentoEntity> create(@RequestBody CriarPagamentoDto dto) {
         PagamentoEntity pagamento = pagamentoController.criarPagamento(dto);
         return new ResponseEntity<>(pagamento, HttpStatus.CREATED);
+    }
+
+    @Operation(
+            summary = "Busca estado pagamento por pedido id",
+            description = "Busca estado pagamento por pedido id na base de dados."
+    )
+    @GetMapping("/pedidos/{pedido_id}")
+    public ResponseEntity<PagamentoEntity> buscarPorPedidoId(@PathVariable("pedido_id") String pedidoId) {
+        PagamentoEntity pagamento = pagamentoController.consultarByPedidoId(pedidoId);
+        return new ResponseEntity<>(pagamento, HttpStatus.OK);
     }
 
     @Operation(

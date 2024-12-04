@@ -129,4 +129,16 @@ class PagamentoUseCaseTest {
         verify(pagamentoGateway, times(1)).consultarByExternalId(savedPagamentoEntity.getExternalId());
         verify(pagamentoGateway, never()).atualizarPagamento(any());
     }
+
+    @Test
+    void shouldqueryPagamento() {
+        var savedPagamentoEntity = generatePagamento(StatusPagamento.PENDENTE);
+        Mockito.when(pagamentoGateway.consultarByPedidoId(savedPagamentoEntity.getPedidoId()))
+                .thenReturn(savedPagamentoEntity);
+
+        var result = pagamentoUseCase.consultarByPedidoId(savedPagamentoEntity.getPedidoId());
+
+        assertEquals(savedPagamentoEntity, result);
+        verify(pagamentoGateway, times(1)).consultarByPedidoId(savedPagamentoEntity.getPedidoId());
+    }
 }
