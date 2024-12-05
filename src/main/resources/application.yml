@@ -14,7 +14,7 @@ payment:
     url: mydomain.sample.com/api/pagamentos/callback
 
 mongo:
-  connection: mongodb://fiap:5z1uCXwBUppuPWmc@mongodb-fiap-tech-challenge.cluster-cpsw6q668tdw.us-east-1.docdb.amazonaws.com:27017/fiap?retryWrites=false
+  connection: mongodb://fiap:5z1uCXwBUppuPWmc@mongodb-fiap-tech-challenge-pagamento.cluster-cpsw6q668tdw.us-east-1.docdb.amazonaws.com:27017/fiap?retryWrites=false
   database: fiap
 
 pedido:
