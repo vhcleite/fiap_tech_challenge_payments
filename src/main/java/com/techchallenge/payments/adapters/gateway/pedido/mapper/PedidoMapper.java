@@ -6,8 +6,8 @@ import com.techchallenge.payments.pkg.dto.PedidoDto;
 public class PedidoMapper {
     public static PedidoEntity toEntity(PedidoDto pedido) {
         return new PedidoEntity(
-                pedido.getId(),
-                pedido.getTotalPrice()
+                pedido.id(),
+                pedido.totalPrice()
         );
     }
 }
