@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - develop
+      - feature/tests-completion
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,4 +42,4 @@ jobs:
         with:
           context: ./
           push: true
-          tags: pedrogimenezsilva/fiap_tech_challenge_payments:v1.0.0
+          tags: pedrogimenezsilva/fiap_tech_challenge_payments:v1.1.0
