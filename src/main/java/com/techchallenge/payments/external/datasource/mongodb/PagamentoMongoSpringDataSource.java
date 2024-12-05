@@ -10,7 +10,9 @@ import java.util.UUID;
 public class PagamentoMongoSpringDataSource implements IPagamentoDataSource {
     private final PagamentoSpringRepository repository;
 
-    public PagamentoMongoSpringDataSource(PagamentoSpringRepository repository) {
+    public PagamentoMongoSpringDataSource(
+            PagamentoSpringRepository repository
+    ) {
         this.repository = repository;
     }
 
