@@ -1,0 +1,30 @@
+name: Code Coverage Check
+
+on:
+  pull_request:
+
+jobs:
+  coverage-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install Dependencies
+        run: ./mvnw install -DskipTests=true
+
+      - name: Run Tests and Check Coverage
+        run: ./mvnw verify
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/index.html

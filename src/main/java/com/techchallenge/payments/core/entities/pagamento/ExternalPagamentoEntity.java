@@ -4,24 +4,14 @@ import com.techchallenge.payments.core.exceptions.InvalidPagamentoException;
 
 import java.math.BigDecimal;
 
-public class ExternalPagamentoEntity {
-    private final String externalId;
-    private final BigDecimal valor;
+public record ExternalPagamentoEntity(String externalId, BigDecimal valor) {
 
-    public ExternalPagamentoEntity(
-            String externalId,
-            BigDecimal valor
-    ) {
+    public ExternalPagamentoEntity {
+        // Perform validation during construction
         validate(externalId, valor);
-
-        this.externalId = externalId;
-        this.valor = valor;
     }
 
-    private void validate(
-            String externalId,
-            BigDecimal valor
-    ) {
+    private static void validate(String externalId, BigDecimal valor) {
         validateExternalId(externalId);
 
         if (valor == null) {
@@ -33,16 +23,7 @@ public class ExternalPagamentoEntity {
         }
     }
 
-    public String getExternalId() {
-        return externalId;
-    }
-
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    private void validateExternalId(String externalId) {
+    private static void validateExternalId(String externalId) {
         if (externalId != null && externalId.trim().isEmpty()) {
             throw new InvalidPagamentoException("external_id nao informado.");
         }

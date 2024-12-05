@@ -22,7 +22,7 @@ public class PedidoUseCase {
         PedidoEntity pedido = buscarPorId(id);
 
         if (statusPagamento == StatusPagamento.APROVADO) {
-            return pedidoGateway.atualizarStatus(pedido.getId(), PedidoStatus.RECEBIDO);
+            return pedidoGateway.atualizarStatus(pedido.id(), PedidoStatus.RECEBIDO);
         }
         return pedido;
     }

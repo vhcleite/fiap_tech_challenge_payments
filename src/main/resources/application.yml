@@ -4,7 +4,7 @@ spring:
   application:
     name: fiap-payments
   profiles:
-    active: local
+    active: ${ENVIRONMENT:local}
     server.port: 8080
 server:
   error:
@@ -12,3 +12,10 @@ server:
 payment:
   callback:
     url: mydomain.sample.com/api/pagamentos/callback
+
+mongo:
+  connection: mongodb://fiap:5z1uCXwBUppuPWmc@mongodb-fiap-tech-challenge-pagamento.cluster-cpsw6q668tdw.us-east-1.docdb.amazonaws.com:27017/fiap?retryWrites=false
+  database: fiap
+
+pedido:
+  uri: https://93kgusvp91.execute-api.us-east-1.amazonaws.com
