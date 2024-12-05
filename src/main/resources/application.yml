@@ -4,7 +4,7 @@ spring:
   application:
     name: fiap-payments
   profiles:
-    active: local
+    active: ${ENVIRONMENT:local}
     server.port: 8080
 server:
   error:
