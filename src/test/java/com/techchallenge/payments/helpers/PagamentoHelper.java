@@ -54,8 +54,8 @@ public class PagamentoHelper {
                 totalPrice,
                 statusPagamento,
                 null,
-                OffsetDateTime.now(),
-                OffsetDateTime.now()
+                OffsetDateTime.now().toString(),
+                OffsetDateTime.now().toString()
         );
     }
 }
