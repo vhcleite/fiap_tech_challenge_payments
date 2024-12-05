@@ -19,7 +19,7 @@ public class PagamentoGateway {
     }
 
     public PagamentoEntity criarPagamento(PagamentoEntity pagamento) {
-        if (pagamento.getId() != null) throw new InvalidPagamentoException("Pagamento já existente");
+        if (pagamento.id() != null) throw new InvalidPagamentoException("Pagamento já existente");
 
         PagamentoDto savedPagamento = dataSource.insertPagamento(PagamentoMapper.toDto(pagamento));
 

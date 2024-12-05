@@ -39,7 +39,7 @@ class PagamentoGatewayTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(savedDto.id(), result.getId());
+        assertEquals(savedDto.id(), result.id());
         verify(dataSource).insertPagamento(any(PagamentoDto.class));
     }
 
@@ -67,7 +67,7 @@ class PagamentoGatewayTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(pagamentoDto.id(), result.getId());
+        assertEquals(pagamentoDto.id(), result.id());
         verify(dataSource).firstPagamentoByPedidoIdSortByUpdatedAtDesc(pedidoId);
     }
 
@@ -84,7 +84,7 @@ class PagamentoGatewayTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(pagamentoDto.id(), result.getId());
+        assertEquals(pagamentoDto.id(), result.id());
         verify(dataSource).firstPagamentoByExternalIdSortByUpdatedAtDesc(externalId);
     }
 
@@ -101,7 +101,7 @@ class PagamentoGatewayTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(pagamentoDto.id(), result.getId());
+        assertEquals(pagamentoDto.id(), result.id());
         verify(dataSource).updatePagamento(any(PagamentoDto.class));
     }
 }

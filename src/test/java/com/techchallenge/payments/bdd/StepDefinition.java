@@ -72,7 +72,7 @@ public class StepDefinition {
 
     @Quando("recebo o callback de um pagamento aprovado")
     public void recebo_o_callback_de_um_pagamento_aprovado() {
-        var dto = new CallbackPagamentoDto(pagamentoEntity.getExternalId());
+        var dto = new CallbackPagamentoDto(pagamentoEntity.externalId());
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(dto)
@@ -85,7 +85,7 @@ public class StepDefinition {
         response.body().prettyPrint();
         Object a = response.then()
                 .statusCode(HttpStatus.OK.value())
-                .body("id", equalTo(pagamentoEntity.getId()))
+                .body("id", equalTo(pagamentoEntity.id()))
                 .body("status", equalTo("APROVADO"));
     }
 }

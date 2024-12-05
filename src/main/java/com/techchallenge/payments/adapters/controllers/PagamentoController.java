@@ -36,7 +36,7 @@ public class PagamentoController {
         StatusPagamento status = pagamentoProcessorUseCase.consultarStatusPagamento(externalId);
         PagamentoEntity pagamento = pagamentoUseCase.callbackPagamento(externalId, status);
 
-        pedidoUseCase.atualizarStatusCallbackPagamento(pagamento.getPedidoId(), pagamento.getStatus());
+        pedidoUseCase.atualizarStatusCallbackPagamento(pagamento.pedidoId(), pagamento.status());
         return pagamento;
     }
 

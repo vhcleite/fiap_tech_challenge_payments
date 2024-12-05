@@ -6,14 +6,14 @@ import com.techchallenge.payments.pkg.dto.PagamentoDto;
 public class PagamentoMapper {
     public static PagamentoDto toDto(PagamentoEntity pagamento) {
         return new PagamentoDto(
-                pagamento.getId(),
-                pagamento.getExternalId(),
-                pagamento.getPedidoId(),
-                pagamento.getValor(),
-                pagamento.getStatus(),
-                pagamento.getPagamentoConfirmadoAt(),
-                pagamento.getCreatedAt(),
-                pagamento.getUpdatedAt()
+                pagamento.id(),
+                pagamento.externalId(),
+                pagamento.pedidoId(),
+                pagamento.valor(),
+                pagamento.status(),
+                pagamento.pagamentoConfirmadoAt(),
+                pagamento.createdAt(),
+                pagamento.updatedAt()
         );
     }
 

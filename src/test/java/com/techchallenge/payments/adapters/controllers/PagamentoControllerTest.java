@@ -81,7 +81,7 @@ class PagamentoControllerTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(StatusPagamento.APROVADO, result.getStatus());
+        assertEquals(StatusPagamento.APROVADO, result.status());
         verify(pagamentoProcessorUseCase).consultarStatusPagamento(externalId);
         verify(pagamentoUseCase).callbackPagamento(externalId, statusPagamento);
         verify(pedidoUseCase).atualizarStatusCallbackPagamento(pedidoId, StatusPagamento.APROVADO);

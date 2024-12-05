@@ -30,11 +30,11 @@ public class PagamentoUseCase {
     private void validatePagamentoCreation(String pedidoId) {
         PagamentoEntity savedPagamento = pagamentoGateway.consultarByPedidoId(pedidoId);
 
-        if (savedPagamento != null && savedPagamento.getStatus() == StatusPagamento.PENDENTE) {
+        if (savedPagamento != null && savedPagamento.status() == StatusPagamento.PENDENTE) {
             throw new InvalidPagamentoException("pedido já possui um pagamento pendente");
         }
 
-        if (savedPagamento != null && savedPagamento.getStatus() == StatusPagamento.APROVADO) {
+        if (savedPagamento != null && savedPagamento.status() == StatusPagamento.APROVADO) {
             throw new InvalidPagamentoException("pedido já possui um pagamento aprovado");
         }
     }
@@ -65,9 +65,9 @@ public class PagamentoUseCase {
                 .orElseThrow(() -> new InvalidPagamentoException("pagamento para external id nao encontrado"));
 
         OffsetDateTime now = OffsetDateTime.now();
-        pagamento.setStatus(status);
-        pagamento.setPagamentoConfirmadoAt(now);
-        pagamento.setUpdatedAt(now);
+        pagamento = pagamento.withStatus(status)
+                .withPagamentoConfirmadoAt(now)
+                .withUpdatedAt(now);
         return pagamentoGateway.atualizarPagamento(pagamento);
     }
 }

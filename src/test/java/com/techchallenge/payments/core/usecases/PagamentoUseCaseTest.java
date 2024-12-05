@@ -37,10 +37,10 @@ class PagamentoUseCaseTest {
                 .thenAnswer(i -> i.getArguments()[0]);
         var result = pagamentoUseCase.criar(pedidoId, totalPrice, externalId);
 
-        assertEquals(pedidoId, result.getPedidoId());
-        assertEquals(externalId, result.getExternalId());
-        assertEquals(StatusPagamento.PENDENTE, result.getStatus());
-        assertEquals(totalPrice, result.getValor());
+        assertEquals(pedidoId, result.pedidoId());
+        assertEquals(externalId, result.externalId());
+        assertEquals(StatusPagamento.PENDENTE, result.status());
+        assertEquals(totalPrice, result.valor());
 
         verify(pagamentoGateway, times(1)).criarPagamento(any(PagamentoEntity.class));
         verify(pagamentoGateway, times(1)).consultarByPedidoId(pedidoId);
@@ -50,42 +50,42 @@ class PagamentoUseCaseTest {
     void shouldNotCreatePagamentoWithThereIsAlreadyOneWithStatusPendente() {
         var savedPagamentoEntity = generatePagamento(StatusPagamento.PENDENTE);
 
-        Mockito.when(pagamentoGateway.consultarByPedidoId(savedPagamentoEntity.getPedidoId()))
+        Mockito.when(pagamentoGateway.consultarByPedidoId(savedPagamentoEntity.pedidoId()))
                 .thenReturn(savedPagamentoEntity);
 
         InvalidPagamentoException ex = assertThrows(
                 InvalidPagamentoException.class,
                 () -> pagamentoUseCase.criar(
-                        savedPagamentoEntity.getPedidoId(),
-                        savedPagamentoEntity.getValor(),
-                        savedPagamentoEntity.getExternalId()
+                        savedPagamentoEntity.pedidoId(),
+                        savedPagamentoEntity.valor(),
+                        savedPagamentoEntity.externalId()
                 )
         );
         assertEquals("pedido já possui um pagamento pendente", ex.getMessage());
 
         verify(pagamentoGateway, never()).criarPagamento(any(PagamentoEntity.class));
-        verify(pagamentoGateway, times(1)).consultarByPedidoId(savedPagamentoEntity.getPedidoId());
+        verify(pagamentoGateway, times(1)).consultarByPedidoId(savedPagamentoEntity.pedidoId());
     }
 
     @Test
     void shouldNotCreatePagamentoWithThereIsAlreadyOneWithStatusAprovado() {
         var savedPagamentoEntity = generatePagamento(StatusPagamento.APROVADO);
 
-        Mockito.when(pagamentoGateway.consultarByPedidoId(savedPagamentoEntity.getPedidoId()))
+        Mockito.when(pagamentoGateway.consultarByPedidoId(savedPagamentoEntity.pedidoId()))
                 .thenReturn(savedPagamentoEntity);
 
         InvalidPagamentoException ex = assertThrows(
                 InvalidPagamentoException.class,
                 () -> pagamentoUseCase.criar(
-                        savedPagamentoEntity.getPedidoId(),
-                        savedPagamentoEntity.getValor(),
-                        savedPagamentoEntity.getExternalId()
+                        savedPagamentoEntity.pedidoId(),
+                        savedPagamentoEntity.valor(),
+                        savedPagamentoEntity.externalId()
                 )
         );
         assertEquals("pedido já possui um pagamento aprovado", ex.getMessage());
 
         verify(pagamentoGateway, never()).criarPagamento(any(PagamentoEntity.class));
-        verify(pagamentoGateway, times(1)).consultarByPedidoId(savedPagamentoEntity.getPedidoId());
+        verify(pagamentoGateway, times(1)).consultarByPedidoId(savedPagamentoEntity.pedidoId());
     }
 
     @Test
@@ -93,19 +93,19 @@ class PagamentoUseCaseTest {
 
         var savedPagamentoEntity = generatePagamento(StatusPagamento.PENDENTE);
 
-        Mockito.when(pagamentoGateway.consultarByExternalId(savedPagamentoEntity.getExternalId()))
+        Mockito.when(pagamentoGateway.consultarByExternalId(savedPagamentoEntity.externalId()))
                 .thenReturn(savedPagamentoEntity);
 
         when(pagamentoGateway.atualizarPagamento(any(PagamentoEntity.class)))
                 .thenAnswer(i -> i.getArguments()[0]);
 
-        var result = pagamentoUseCase.callbackPagamento(savedPagamentoEntity.getExternalId(), StatusPagamento.APROVADO);
+        var result = pagamentoUseCase.callbackPagamento(savedPagamentoEntity.externalId(), StatusPagamento.APROVADO);
 
-        assertNotNull(result.getPagamentoConfirmadoAt());
-        assertEquals(result.getUpdatedAt(), result.getPagamentoConfirmadoAt());
-        assertEquals(StatusPagamento.APROVADO, result.getStatus());
+        assertNotNull(result.pagamentoConfirmadoAt());
+        assertEquals(result.updatedAt(), result.pagamentoConfirmadoAt());
+        assertEquals(StatusPagamento.APROVADO, result.status());
 
-        verify(pagamentoGateway, times(1)).consultarByExternalId(savedPagamentoEntity.getExternalId());
+        verify(pagamentoGateway, times(1)).consultarByExternalId(savedPagamentoEntity.externalId());
         verify(pagamentoGateway, times(1)).atualizarPagamento(result);
     }
 
@@ -114,31 +114,31 @@ class PagamentoUseCaseTest {
 
         var savedPagamentoEntity = generatePagamento(StatusPagamento.PENDENTE);
 
-        Mockito.when(pagamentoGateway.consultarByExternalId(savedPagamentoEntity.getExternalId()))
+        Mockito.when(pagamentoGateway.consultarByExternalId(savedPagamentoEntity.externalId()))
                 .thenReturn(null);
 
         InvalidPagamentoException ex = assertThrows(
                 InvalidPagamentoException.class,
                 () -> pagamentoUseCase.callbackPagamento(
-                        savedPagamentoEntity.getExternalId(), StatusPagamento.APROVADO
+                        savedPagamentoEntity.externalId(), StatusPagamento.APROVADO
                 )
         );
 
         assertEquals("pagamento para external id nao encontrado", ex.getMessage());
 
-        verify(pagamentoGateway, times(1)).consultarByExternalId(savedPagamentoEntity.getExternalId());
+        verify(pagamentoGateway, times(1)).consultarByExternalId(savedPagamentoEntity.externalId());
         verify(pagamentoGateway, never()).atualizarPagamento(any());
     }
 
     @Test
     void shouldqueryPagamento() {
         var savedPagamentoEntity = generatePagamento(StatusPagamento.PENDENTE);
-        Mockito.when(pagamentoGateway.consultarByPedidoId(savedPagamentoEntity.getPedidoId()))
+        Mockito.when(pagamentoGateway.consultarByPedidoId(savedPagamentoEntity.pedidoId()))
                 .thenReturn(savedPagamentoEntity);
 
-        var result = pagamentoUseCase.consultarByPedidoId(savedPagamentoEntity.getPedidoId());
+        var result = pagamentoUseCase.consultarByPedidoId(savedPagamentoEntity.pedidoId());
 
         assertEquals(savedPagamentoEntity, result);
-        verify(pagamentoGateway, times(1)).consultarByPedidoId(savedPagamentoEntity.getPedidoId());
+        verify(pagamentoGateway, times(1)).consultarByPedidoId(savedPagamentoEntity.pedidoId());
     }
 }
