@@ -15,8 +15,6 @@ import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import java.util.UUID;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -27,20 +25,66 @@ public class StepDefinition {
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .registerModule(new JavaTimeModule());
     private Response response;
+    private String pedidoId;
     private PagamentoEntity pagamentoEntity;
     private CriarPagamentoDto dto;
 
+    private final String ENDPOINT_API_PEDIDO = "http://localhost:8081/api/pedidos";
     private final String ENDPOINT_API_PAGAMENTO = "http://localhost:8080/api/pagamentos";
     private final String ENDPOINT_API_CALLBACK = "http://localhost:8080/api/pagamentos/callback";
 
     @Dado("que tenho um pedido previamente cadastrado")
     public void que_tenho_um_pedido_previamente_cadastrado() {
+        {
+            String requestBody = """
+                        {
+                            "client_id": "1",
+                            "combos": [
+                                {
+                                    "lanche": {
+                                        "id_produto": "1",
+                                        "quantity": 1,
+                                        "price": 10
+                                    },
+                                    "acompanhamento": {
+                                        "id_produto": "2",
+                                        "quantity": 2,
+                                        "price": 10
+                                    },
+                                    "bebida": {
+                                        "id_produto": "3",
+                                        "quantity": 1,
+                                        "price": 10
+                                    },
+                                    "sobremesa": {
+                                        "id_produto": "4",
+                                        "quantity": 1,
+                                        "price": 10
+                                    }
+                                }
+                            ]
+                        }
+                    """;
 
+            // Make the POST request
+            Response response = given()
+                    .header("Content-Type", "application/json") // Set Content-Type header
+                    .body(requestBody) // Set the body of the request
+                    .when()
+                    .post(ENDPOINT_API_PEDIDO) // Endpoint to hit
+                    .then()
+                    .statusCode(201) // Validate the response status code (change as per your API)
+                    .extract()
+                    .response(); // Extract the response
+
+            // Print the response body
+            pedidoId = response.jsonPath().getString("id");
+        }
     }
 
     @Quando("crio um pagamento")
     public void crio_um_pagamento() {
-        dto = new CriarPagamentoDto(UUID.randomUUID().toString());
+        dto = new CriarPagamentoDto(pedidoId);
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(dto)
@@ -59,15 +103,11 @@ public class StepDefinition {
 
     @Dado("que tenho um pagamento previamente criado")
     public void que_tenho_um_pagamento_previamente_criado() throws JsonProcessingException {
-        dto = new CriarPagamentoDto(UUID.randomUUID().toString());
-        String response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(dto)
-                .when()
-                .post(ENDPOINT_API_PAGAMENTO)
-                .body().asString();
+        que_tenho_um_pedido_previamente_cadastrado();
+        crio_um_pagamento();
 
-        pagamentoEntity = mapper.readValue(response, PagamentoEntity.class);
+        String content = response.asString();
+        pagamentoEntity = mapper.readValue(content, PagamentoEntity.class);
     }
 
     @Quando("recebo o callback de um pagamento aprovado")
