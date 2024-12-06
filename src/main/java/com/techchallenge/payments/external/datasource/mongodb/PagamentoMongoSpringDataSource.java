@@ -1,6 +1,6 @@
 package com.techchallenge.payments.external.datasource.mongodb;
 
-//@Component
+//@Componentaa
 public class PagamentoMongoSpringDataSource {
 //        implements IPagamentoDataSource {
 //    private final PagamentoSpringRepository repository;
