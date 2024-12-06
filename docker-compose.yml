@@ -18,13 +18,3 @@ services:
     container_name: "docker-payment-app"
     ports:
       - 8080:8080
-#  app:
-#    image: pedrogimenezsilva/fiap_tech_challenge:v1.0.0
-#    container_name: "docker-app"
-#    depends_on:
-#      - mongodb
-#    networks:
-#      - tech-challenge
-#    ports:
-#      - 8081:8081
-#    restart: always
