@@ -1,8 +1,4 @@
 spring.data.mongodb.uri: mongodb://localhost:27070/docker-db
 
-mongo:
-  connection: mongodb://localhost:27070
-  database: docker-db
-
 pedido:
   uri: http://localhost:8081
