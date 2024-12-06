@@ -2,11 +2,10 @@ package com.techchallenge.payments.external.datasource.mongodb;
 
 import com.techchallenge.payments.pkg.dto.PagamentoDto;
 import com.techchallenge.payments.pkg.interfaces.IPagamentoDataSource;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
+//@Component
 public class PagamentoMongoSpringDataSource implements IPagamentoDataSource {
     private final PagamentoSpringRepository repository;
 
