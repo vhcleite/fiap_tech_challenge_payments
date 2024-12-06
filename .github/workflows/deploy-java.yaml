@@ -42,4 +42,4 @@ jobs:
         with:
           context: ./
           push: true
-          tags: pedrogimenezsilva/fiap_tech_challenge_payments:v1.1.0
+          tags: pedrogimenezsilva/fiap_tech_challenge_payments:v1.2.0
